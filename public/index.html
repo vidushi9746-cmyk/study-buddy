@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Study Buddy — Your Personal AI Study Partner</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+      <div class="brand">
+
+        <div class="logo">SB</div>
+
+        <div>
+          <h1>Study Buddy</h1>
+
+          <p>
+            Your notes. Your learning style. Your AI study partner.
+          </p>
+        </div>
+
+      </div>
+
+      <span class="model-pill">
+        Powered by Gemma 4
+      </span>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+      <!-- HERO -->
+
+      <section class="hero">
+
+        <div>
+
+          <p class="eyebrow">
+            PERSONALIZED LEARNING
+          </p>
+
+          <h2>
+            Understand it.<br>
+            <span>Don't just memorize it.</span>
+          </h2>
+
+          <p class="hero-copy">
+            Ask questions about your study material and choose how you want the concept explained.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= INPUT GRID ================= -->
+
+      <div class="grid">
+
+
+        <!-- ================= NOTES ================= -->
+
+        <section class="card notes-card">
+
+          <div class="card-title">
+
+            <div>
+
+              <span class="step">
+                01
+              </span>
+
+              <h3>
+                Your study notes
+              </h3>
+
+            </div>
+
+            <button
+              id="sampleBtn"
+              class="text-btn"
+              type="button"
+            >
+              Load sample
+            </button>
+
+          </div>
+
+
+          <!-- PDF DROP ZONE -->
+
+          <div
+            id="dropZone"
+            class="drop-zone"
+          >
+
+            <input
+              id="pdfInput"
+              type="file"
+              accept=".pdf,application/pdf"
+              hidden
+            />
+
+
+            <div class="upload-icon">
+              ↑
+            </div>
+
+
+            <div>
+
+              <strong>
+                Drop your PDF here
+              </strong>
+
+              <span>
+
+                or
+
+                <button
+                  id="choosePdf"
+                  type="button"
+                >
+                  choose a file
+                </button>
+
+              </span>
+
+              <small>
+                PDF only • up to 10 MB
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <!-- PDF FILE STATUS -->
+
+          <div
+            id="fileStatus"
+            class="file-status hidden"
+          >
+
+            <div>
+
+              <strong id="fileName"></strong>
+
+              <small id="filePages"></small>
+
+            </div>
+
+
+            <button
+              id="removePdf"
+              type="button"
+            >
+              Remove
+            </button>
+
+          </div>
+
+
+          <!-- DIVIDER -->
+
+          <div class="divider">
+
+            <span>
+              OR PASTE NOTES
+            </span>
+
+          </div>
+
+
+          <!-- NOTES TEXTAREA -->
+
+          <textarea
+            id="notes"
+            placeholder="Paste your lecture notes here..."
+          ></textarea>
+
+
+          <div class="hint">
+
+            Tip: paste a section from your lecture notes, textbook, or question bank.
+
+          </div>
+
+        </section>
+
+
+
+        <!-- ================= ASK ================= -->
+
+        <section class="card ask-card">
+
+          <div class="card-title">
+
+            <div>
+
+              <span class="step">
+                02
+              </span>
+
+              <h3>
+                What do you want to know?
+              </h3>
+
+            </div>
+
+          </div>
+
+
+          <textarea
+            id="question"
+            class="question-box"
+            placeholder="e.g. Explain process isolation in simple terms..."
+          ></textarea>
+
+
+          <!-- MODES -->
+
+          <div class="modes">
+
+            <button
+              class="mode active"
+              data-mode="simple"
+              type="button"
+            >
+              ✨ Explain simply
+            </button>
+
+            <button
+              class="mode"
+              data-mode="analogy"
+              type="button"
+            >
+              💡 Give analogy
+            </button>
+
+            <button
+              class="mode"
+              data-mode="exam"
+              type="button"
+            >
+              📝 Exam answer
+            </button>
+
+            <button
+              class="mode"
+              data-mode="quiz"
+              type="button"
+            >
+              🎯 Quiz me
+            </button>
+
+          </div>
+
+
+          <!-- ASK BUTTON -->
+
+          <button
+            id="askBtn"
+            class="ask-btn"
+            type="button"
+          >
+            Ask Study Buddy
+            <span>→</span>
+          </button>
+
+        </section>
+
+      </div>
+
+
+
+      <!-- ================= ANSWER CARD ================= -->
+
+      <div
+        class="answer-card hidden"
+        id="answerCard"
+      >
+
+        <div class="answer-header">
+
+          <div class="answer-title">
+
+            <span class="ai-dot"></span>
+
+            <div>
+
+              <strong>
+                Study Buddy
+              </strong>
+
+              <small id="answerMode">
+                Simple explanation
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <div class="answer-actions">
+
+            <button
+              id="speakBtn"
+              type="button"
+              title="Read aloud"
+            >
+              🔊
+            </button>
+
+            <button
+              id="copyBtn"
+              type="button"
+              title="Copy answer"
+            >
+              📋
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- AI ANSWER -->
+
+        <div
+          class="answer-body"
+          id="answer"
+        >
+          <!-- AI answer appears here -->
+        </div>
+
+
+        <!-- ANSWER FOOTER -->
+
+        <div class="answer-footer">
+
+          <span>
+            ✨ Generated from your study material
+          </span>
+
+          <button
+            id="againBtn"
+            type="button"
+          >
+            ↻ Explain differently
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ================= QUIZ CARD ================= -->
+
+      <div
+        id="quizCard"
+        class="quiz-card hidden"
+      >
+
+        <div class="quiz-top">
+
+          <div>
+
+            <span class="quiz-label">
+              QUIZ MODE
+            </span>
+
+            <h3>
+              Test your understanding
+            </h3>
+
+          </div>
+
+
+          <div class="quiz-score">
+
+            <span id="quizProgress">
+              1 / 5
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- PROGRESS BAR -->
+
+        <div class="quiz-progress">
+
+          <div id="quizProgressBar"></div>
+
+        </div>
+
+
+        <!-- QUESTION -->
+
+        <div
+          class="quiz-question"
+          id="quizQuestion"
+        >
+          Question appears here
+        </div>
+
+
+        <!-- OPTIONS -->
+
+        <div
+          class="quiz-options"
+          id="quizOptions"
+        >
+          <!-- Options inserted by JavaScript -->
+        </div>
+
+
+        <!-- FEEDBACK -->
+
+        <div
+          id="quizFeedback"
+          class="quiz-feedback hidden"
+        >
+
+          <strong id="feedbackTitle"></strong>
+
+          <p id="feedbackText"></p>
+
+        </div>
+
+
+        <!-- NEXT -->
+
+        <button
+          id="nextQuestion"
+          class="next-question hidden"
+          type="button"
+        >
+          Next Question →
+        </button>
+
+      </div>
+
+    </main>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+      <span>
+        Built for a friend who wants to understand, not just memorize.
+      </span>
+
+      <span>
+        Open-weight AI • Gemma 4
+      </span>
+
+    </footer>
+
+  </div>
+
+
+  <script src="app.js"></script>
+
+</body>
+</html>
